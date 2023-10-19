@@ -1,6 +1,6 @@
 const { Schema, model } = require('mongoose');
 
-// Schema to create User model
+// Schema to create thought model
 const thoughtSchema = new Schema(
   {
     thoughtText: {
@@ -33,15 +33,15 @@ const thoughtSchema = new Schema(
   }
 );
 
-// Create a virtual property `friendCount` that gets and sets the user's full name
-userSchema
+// Create a virtual property `reactionCount` that returns the number of reactions
+thoughtSchema
   .virtual('reactionCount')
   // Getter
   .get(function () {
     return `${this.reactions.length}`;
   })
 
-// Initialize our User model
-const Thought = model('Thought', userSchema);
+// Initialize our thought model
+const Thought = model('Thought', thoughtSchema);
 
 module.exports = Thought;

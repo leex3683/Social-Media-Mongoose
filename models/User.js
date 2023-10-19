@@ -13,7 +13,7 @@ const userSchema = new Schema(
         type: String,
         required: true,
         unique: true,
-        match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, "Must follow email naming convention"],
+        match: [`/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/`, "Must follow email naming convention"],
     },
     thoughts: [
       {
@@ -38,7 +38,7 @@ const userSchema = new Schema(
   }
 );
 
-// Create a virtual property `friendCount` that gets and sets the user's full name
+// Create a virtual property `friendCount` that returns the number of friends
 userSchema
   .virtual('friendCount')
   // Getter

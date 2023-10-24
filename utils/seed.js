@@ -1,10 +1,11 @@
 const connection = require("../config/connection");
 const { User, Reaction, Thought } = require("../models");
-const {
-  getRandomName,
-  getRandomThoughts,
-  getRandomReactions,
-} = require("./data");
+const { ObjectId } = require('mongodb');
+// const {
+//   getRandomName,
+//   getRandomThoughts,
+//   getRandomReactions,
+// } = require("./data");
 
 connection.on("error", (err) => err);
 
@@ -16,44 +17,81 @@ connection.once("open", async () => {
     .toArray();
   if (userCheck.length) {
     await connection.dropCollection("users");
-    console.log("names dropped-----------------")
+    console.log("names dropped-----------------");
   }
 
-  let reactionCheck = await connection.db
-  .listCollections({ name: "reactions" })
-  .toArray();
-if (reactionCheck.length) {
-  await connection.dropCollection("reactions");
-  console.log("reactions dropped-----------------")
-}
-  // let studentsCheck = await connection.db.listCollections({ name: 'students' }).toArray();
-  // if (studentsCheck.length) {
-  //   await connection.dropCollection('students');
-  // }
-
-  // Create empty array to hold the students
-  const users = [];
-
-
-  // Loop 20 times -- add students to the students array
-  for (let i = 0; i < 20; i++) {
-    // Get some random assignment objects using a helper function that we imported from ./data
-    // const thoughts = getRandomThoughts(20);
-    // const reactions = getRandomReactions(20);
-    const name = getRandomName();
-
-    users.push({
-      name,
-    //   thoughts,
-    // reactions,
-    });
+  // Delete the collections if they exist
+  let thoughtCheck = await connection.db
+    .listCollections({ name: "thoughts" })
+    .toArray();
+  if (thoughtCheck.length) {
+    await connection.dropCollection("thoughts");
+    console.log("thoughts dropped-----------------");
   }
 
-  // Add students to the collection and await the results
-  await User.collection.insertMany(users);
+  await Thought.collection.insertMany([
+    {
+      _id: "HRmn0As5R56dsSDFe86121f1ey1S1", 
+      thoughtText: "my first thought",
+      username: "Michael",
+    },
+    {
+      _id: "HRmn0As5R56dsSDFe86121f1ey1S2", 
+      thoughtText: "my second thought",
+      username: "Michael",
+    },
+    {
+      _id: "HRmn0As5R56dsSDFe86121f1ey1S3", 
+      thoughtText: "my 3rd thought",
+      username: "Michael",
+    },
+    {
+      _id: "HRmn0As5R56dsSDFe86121f1ey1S4", 
+      thoughtText: "my 4th thought",
+      username: "Yee",
+    },
+  ]);
+
+const michaelObjectId = new ObjectId();
+const yeeObjectId = new ObjectId();
+const linhObjectId = new ObjectId();
+const jimObjectId = new ObjectId();
+
+console.log(JSON.stringify(michaelObjectId))
+
+  await User.collection.insertMany([
+    {
+      _id: michaelObjectId,
+      username: "Michael",
+      email: "Michael@gmail.com",
+      thoughts: ["HRmn0As5R56dsSDFe86121f1ey1S1","HRmn0As5R56dsSDFe86121f1ey1S2"],
+      friends: [yeeObjectId,linhObjectId],
+    },
+    {
+      _id: `65308ada461f580c1ee8c473`,
+      username: "Linh",
+      email: "Linh@gmail.com",
+      thoughts: ["HRmn0As5R56dsSDFe86121f1ey1S5"],
+      friends: [michaelObjectId, yeeObjectId],
+    },
+    {
+      _id: yeeObjectId,
+      username: "Yee",
+      email: "Yee@gmail.com",
+      thoughts: ["HRmn0As5R56dsSDFe86121f1ey1S4"],
+      friends: [michaelObjectId, linhObjectId],
+    },
+    {
+      _id: jimObjectId, 
+      username: "Jim",
+      email: "Jim@gmail.com",
+      thoughts: [],
+      friends: [michaelObjectId],
+    },
+  ]);
 
   // Log out the seed data to indicate what should appear in the database
-  console.table(users);
+
   console.info("Seeding complete! 🌱");
   process.exit(0);
 });

@@ -124,14 +124,10 @@ const names = [
     `${getRandomArrItem(names)}`;
   
   // Function to generate random thoughts that we can add to student object.
-  const getRandomThoughts = (int) => {
-    const results = [];
-    for (let i = 0; i < int; i++) {
-      results.push({
-        thoughtText: getRandomArrItem(thoughts),
-
-      });
-    }
+  const getRandomThoughts = () => {
+    const randThought = getRandomArrItem(thoughts)
+    const results = {thoughtText: randThought}
+    console.log(`rand thought was ${results}` )
     return results;
   };
   

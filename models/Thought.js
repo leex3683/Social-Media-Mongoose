@@ -1,4 +1,6 @@
 const { Schema, model } = require('mongoose');
+const reactionSchema = require("./Reaction");
+const moment = require('moment');
 
 // Schema to create thought model
 const thoughtSchema = new Schema(
@@ -6,28 +8,25 @@ const thoughtSchema = new Schema(
     thoughtText: {
         type: String,
         required: true,
-        match: '/^.{1,280}$/'
-    },
+        maxlength: 280,
+          },
     createdAt:  {
         type: Date,
         default: Date.now,
+        get: formattedDate => moment(formattedDate).format("MMM DD, YYYY [at] hh:mm a"),
     },
     username:   {
         type: String,
         required: true,
       },
-    reactions: [
-        {
-          type: Schema.Types.ObjectId,
-          ref: 'Reaction',
-        },
-      ],
+    reactions: [reactionSchema],
   },
   {
     // Mongoose supports two Schema options to transform Objects after querying MongoDb: toJSON and toObject.
     // Here we are indicating that we want virtuals to be included with our response, overriding the default behavior
     toJSON: {
       virtuals: true,
+      getters: true
     },
     id: false,
   }

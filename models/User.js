@@ -13,7 +13,7 @@ const userSchema = new Schema(
         type: String,
         required: true,
         unique: true,
-        match: [`/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/`, "Must follow email naming convention"],
+        // match: [`/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/`, "Must follow email naming convention"],
     },
     thoughts: [
       {
@@ -43,7 +43,11 @@ userSchema
   .virtual('friendCount')
   // Getter
   .get(function () {
+    if(this.friends.length){
     return `${this.friends.length}`;
+    } else {
+    return '0';
+  }
   })
 
 // Initialize our User model

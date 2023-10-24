@@ -29,24 +29,29 @@ connection.once("open", async () => {
     console.log("thoughts dropped-----------------");
   }
 
+  const thoughtOneObjectId = new ObjectId();
+  const thoughtTwoObjectId = new ObjectId();
+  const thoughtThreeObjectId = new ObjectId();
+  const thoughtFourObjectId = new ObjectId();
+
   await Thought.collection.insertMany([
     {
-      _id: "HRmn0As5R56dsSDFe86121f1ey1S1", 
+      _id: thoughtOneObjectId, 
       thoughtText: "my first thought",
       username: "Michael",
     },
     {
-      _id: "HRmn0As5R56dsSDFe86121f1ey1S2", 
+      _id: thoughtTwoObjectId, 
       thoughtText: "my second thought",
       username: "Michael",
     },
     {
-      _id: "HRmn0As5R56dsSDFe86121f1ey1S3", 
+      _id: thoughtThreeObjectId, 
       thoughtText: "my 3rd thought",
       username: "Michael",
     },
     {
-      _id: "HRmn0As5R56dsSDFe86121f1ey1S4", 
+      _id: thoughtFourObjectId, 
       thoughtText: "my 4th thought",
       username: "Yee",
     },
@@ -64,21 +69,21 @@ console.log(JSON.stringify(michaelObjectId))
       _id: michaelObjectId,
       username: "Michael",
       email: "Michael@gmail.com",
-      thoughts: ["HRmn0As5R56dsSDFe86121f1ey1S1","HRmn0As5R56dsSDFe86121f1ey1S2"],
+      thoughts: [thoughtOneObjectId,thoughtTwoObjectId],
       friends: [yeeObjectId,linhObjectId],
     },
     {
       _id: `65308ada461f580c1ee8c473`,
       username: "Linh",
       email: "Linh@gmail.com",
-      thoughts: ["HRmn0As5R56dsSDFe86121f1ey1S5"],
+      thoughts: [thoughtThreeObjectId],
       friends: [michaelObjectId, yeeObjectId],
     },
     {
       _id: yeeObjectId,
       username: "Yee",
       email: "Yee@gmail.com",
-      thoughts: ["HRmn0As5R56dsSDFe86121f1ey1S4"],
+      thoughts: [thoughtFourObjectId],
       friends: [michaelObjectId, linhObjectId],
     },
     {

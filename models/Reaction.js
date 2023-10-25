@@ -1,4 +1,6 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model, Types } = require('mongoose');
+const moment = require('moment');
+
 
 // Schema to create Reaction model
 const reactionSchema = new Schema(
@@ -10,7 +12,7 @@ const reactionSchema = new Schema(
     reactionBody: {
         type: String,
         required: true,
-        match: '/^.{0,280}$/',
+        // match: '/^.{0,280}$/',
     },
     username:    {
         type: String,
@@ -19,7 +21,7 @@ const reactionSchema = new Schema(
     createdAt:   {
           type: Date,
           default: Date.now,
-          get: (now) => moment(now).format("MMM DD, YYYY [at] hh:mm a"),
+          get: formattedDate => moment(formattedDate).format("MMM DD, YYYY [at] hh:mm a"),
         },
 
   },

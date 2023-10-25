@@ -10,7 +10,6 @@ const { ObjectId } = require('mongodb');
 connection.on("error", (err) => err);
 
 connection.once("open", async () => {
-  console.log("connected");
   // Delete the collections if they exist
   let userCheck = await connection.db
     .listCollections({ name: "users" })
@@ -29,16 +28,33 @@ connection.once("open", async () => {
     console.log("thoughts dropped-----------------");
   }
 
-  const thoughtOneObjectId = new ObjectId();
-  const thoughtTwoObjectId = new ObjectId();
-  const thoughtThreeObjectId = new ObjectId();
-  const thoughtFourObjectId = new ObjectId();
+//Reaction Id objects
+const reactionObjectId1 = new ObjectId()
+const reactionObjectId2 = new ObjectId()
+
+//Thought Id objects
+const thoughtOneObjectId = new ObjectId();
+const thoughtTwoObjectId = new ObjectId();
+const thoughtThreeObjectId = new ObjectId();
+const thoughtFourObjectId = new ObjectId();
 
   await Thought.collection.insertMany([
     {
       _id: thoughtOneObjectId, 
       thoughtText: "my first thought",
       username: "Michael",
+      reactions: [
+        {
+          reactionId:reactionObjectId1,
+          reactionBody:"wow",
+          username:"Yee",
+        },
+        {
+          reactionId:reactionObjectId2,
+          reactionBody:"yikes",
+          username:"Linh",
+        }
+      ]
     },
     {
       _id: thoughtTwoObjectId, 
@@ -61,8 +77,6 @@ const michaelObjectId = new ObjectId();
 const yeeObjectId = new ObjectId();
 const linhObjectId = new ObjectId();
 const jimObjectId = new ObjectId();
-
-console.log(JSON.stringify(michaelObjectId))
 
   await User.collection.insertMany([
     {

@@ -5,7 +5,7 @@ const moment = require('moment');
 // Schema to create Reaction model
 const reactionSchema = new Schema(
   {
-    reactionID: {
+    reactionId: {
         type: Schema.Types.ObjectId,
         default: () => new Types.ObjectId(),
     },

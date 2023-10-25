@@ -175,5 +175,53 @@ module.exports = {
   }
 },
 
+  // Delete a reaction
+  async deleteReaction(req, res) {
+    try {
+      const newReaction = await Thought.findOneAndUpdate(
+        {_id: req.params.thoughtId},
+        {$pull: {reactions: { reactionId:req.params.reactionId}}},
+        { runValidators: true, new: true }
+      );
+      res.json(newReaction);
+    } catch (err) {
+      console.log(err)
+      res.status(500).json(err);
+    }
+  },
+
+
+
+   //add a friend to a user
+ async addFriend(req, res) {
+  try {
+    const newFriend = await User.findOneAndUpdate(
+      {_id: req.params.userId},
+      {$addToSet: {friends: req.params.friendId}},
+      { runValidators: true, new: true }
+    );
+    res.json(newFriend);
+  } catch (err) {
+    console.log(err)
+    res.status(500).json(err);
+  }
+},
+
+  // Delete a reaction
+  async deleteFriend(req, res) {
+    try {
+      const newFriend = await User.findOneAndUpdate(
+        {_id: req.params.userId},
+        {$pull: {friends: req.params.friendId}},
+        { runValidators: true, new: true }
+      );
+      res.json(newFriend);
+    } catch (err) {
+      console.log(err)
+      res.status(500).json(err);
+    }
+  },
+
+
 
 };
